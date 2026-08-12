@@ -1,0 +1,21 @@
+{
+  "name": "tool-honesty",
+  "version": "1.0.0",
+  "description": "What two Claude models say when the tools they need are not attached, measured over 40 calls with a tools-on control.",
+  "license": "MIT",
+  "author": "Dmitry Semenkevich <dimhold@gmail.com>",
+  "type": "module",
+  "private": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "probe": "tsx run.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
