@@ -154,6 +154,33 @@ Two models, two questions, 48 calls, one sitting. A comparison, not a benchmark.
 
 The follow up probe, [tool-failure](https://gist.github.com/dimhold/765db7dbb50ce1ebecde2ba35f3c835d), leaves the tool attached and breaks it instead, five ways, 100 calls. Short version: when the tool announces its own failure the answer says so 39 of 40 times, and when the tool returns a corrupted value silently the answer says so 0 of 40 times.
 
+## Prior work
+
+Checked 2026-08-27. The question is studied. The setting is not.
+
+- [ToolBeHonest](https://arxiv.org/abs/2406.20015) (June 2024) benchmarks
+  hallucination in tool-augmented LLMs and one of its axes is exactly this
+  scenario: a task whose necessary tool is missing. It works at benchmark
+  scale with 700 annotated samples and grades whether the model detects
+  that the task is unsolvable.
+- [The Reasoning Trap](https://arxiv.org/abs/2510.22977) (October 2025)
+  introduces SimpleToolHalluBench, which measures tool hallucination with
+  no tool available as its first failure mode. It finds that strengthening
+  reasoning makes the hallucination worse.
+- [Reducing Tool Hallucination via Reliability Alignment](https://arxiv.org/abs/2412.04141)
+  (December 2024) names the taxonomy, tool selection hallucination and tool
+  usage hallucination, and trains models against both.
+- The abstention literature, for example
+  [Do Large Language Models Know What They Don't Know?](https://arxiv.org/abs/2305.18153),
+  covers the general "say you can't" behaviour with no tools in the picture.
+
+So "models do not announce a missing tool" is established. What none of these
+do is measure it through a shipped agent harness: a production CLI with the
+tools actually stripped, ground truth generated fresh per run and replies
+judged deterministically against it. The fabricated tool results, including
+an invented error and an invented system reminder, come from that setting.
+This is a field probe of a known phenomenon, not the discovery of it.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
