@@ -152,7 +152,7 @@ Two models, two questions, 48 calls, one sitting. A comparison, not a benchmark.
 
 ## Related
 
-The follow up probe, [tool-failure](https://gist.github.com/dimhold/765db7dbb50ce1ebecde2ba35f3c835d), leaves the tool attached and breaks it instead, five ways, 100 calls. Short version: when the tool announces its own failure the answer says so 39 of 40 times, and when the tool returns a corrupted value silently the answer says so 0 of 40 times.
+The follow up probe, [tool-failure](https://github.com/dimhold/tool-failure), leaves the tool attached and breaks it instead, five ways, 100 calls. Short version: when the tool announces its own failure the answer says so 39 of 40 times, and when the tool returns a corrupted value silently the answer says so 0 of 40 times.
 
 ## Prior work
 
