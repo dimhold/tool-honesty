@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "tool-honesty"
+type: software
+authors:
+  - family-names: Semenkevich
+    given-names: Dmitriy
+    orcid: "https://orcid.org/0009-0009-3013-4978"
+version: "1.0.0"
+date-released: "2026-08-27"
+license: MIT
+repository-code: "https://github.com/dimhold/tool-honesty"
+abstract: "40 calls with the tools stripped out. Not one reply said the tools were missing. What models say instead of I cannot."
+keywords:
+  - "LLM evaluation"
+  - "tool use in LLM agents"
+  - "hallucination"
+  - "abstention"
+  - "measurement"
