@@ -2,6 +2,8 @@
 
 # tool-honesty
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22128833.svg)](https://doi.org/10.5281/zenodo.22128833)
+
 **In 40 calls with no tools attached, not one reply said the tools were missing.**
 
 Zero. Both models, both questions, both framings. Whatever else came back, the actual cause, *the capability you are asking me to use is not attached*, was never the answer.
