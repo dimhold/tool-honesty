@@ -4,11 +4,19 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22128833.svg)](https://doi.org/10.5281/zenodo.22128833)
 
-**In 40 calls with no tools attached, not one reply said the tools were missing.**
+**In 119 calls with no tools attached, not one reply said the tools were missing.**
 
-Zero. Both models, both questions, both framings. Whatever else came back, the actual cause, *the capability you are asking me to use is not attached*, was never the answer.
+Zero. 4 models, 3 sittings, both questions, both framings. Whatever else came back, the actual cause, *the capability you are asking me to use is not attached*, was never the answer.
 
-Run date: 2026-08-13. Models: `claude-haiku-4-5`, `claude-opus-5`, through the Claude Code CLI.
+3 sittings through the Claude Code CLI:
+
+| sitting | date | models | usable replies with tools off | said the tools were missing |
+|---|---|---|---:|---:|
+| v1 | 2026-08-13 | `claude-haiku-4-5`, `claude-opus-5` | 40 | **0** |
+| v2 | 2026-08-17 | the same 2 plus `claude-sonnet-5`, `claude-fable-5` | 59 | **0** |
+| v3 | 2026-09-06 | `claude-fable-5-1` | 20 | **0** |
+
+The numbered sections below describe v1, which is the sitting the tables and the samples come from. What v2 and v3 added is in [What the later sittings changed](#what-the-later-sittings-changed).
 
 ## The question
 
@@ -83,7 +91,7 @@ Two independent flags are also recorded: whether the reply contains a **tool cal
 
 Control, same questions, tools on: **4/4 correct for each model.** So the files were there, the paths were right, and the ground truth was right. Every "does not exist" above is false.
 
-Every raw reply is in [`transcript.md`](transcript.md), so any call can be re-judged by hand. Structured output is in [`results.json`](results.json).
+Every raw reply is in [`transcript-v1.md`](transcript-v1.md), so any call can be re-judged by hand. Structured output is in [`results-v1.json`](results-v1.json). The later sittings are in `transcript-v2.md`, `results-v2.json`, `transcript-v3-fable.md` and `results-v3-fable.json`.
 
 ### Two models, two different ways to be wrong
 
@@ -146,11 +154,32 @@ npx tsx run.ts --n 5 --control 2 --concurrency 3
 
 Flags: `--n` trials per cell, `--control` control trials, `--concurrency`, `--models` (comma separated), `--date`.
 
-The run rewrites `results.json` and `transcript.md` in place. The ground truth is regenerated per run, so the numbers will differ. The shape should not. Wall clock time is deliberately not measured. It would measure the connection rather than the model.
+Also `--suffix`, which appends to the output filenames. Without it a run writes `results.json` and `transcript.md` in place, and a rerun on one model overwrites the data of a sitting that is already published. That happened here on 2026-09-06 and git is the only reason the v1 files survived, which is luck rather than design.
+
+The ground truth is regenerated per run, so the numbers will differ. The shape should not. Wall clock time is deliberately not measured. It would measure the connection rather than the model.
+
+## What the later sittings changed
+
+**v2, 2026-08-17.** The same battery on 4 models in one sitting. `claude-sonnet-5` behaves like neither of the first two: it writes out a phantom tool call in 11 of 20 replies and asserts a made up value in 4. **`claude-fable-5` returned nothing at all**: 24 calls, control included, every one an empty reply from the CLI. That is recorded as a failed run rather than dropped, because a model that cannot be reached is a fact about the sitting and not a gap to hide. One sonnet call failed the same way. 59 usable replies, still zero disclosures.
+
+**v3, 2026-09-06.** The hole was worth closing, so `claude-fable-5-1` was run again on the same battery. This time it answered every call.
+
+| tools off, out of 20 calls each | opus 5 | sonnet 5 | haiku 4.5 | fable 5.1 |
+|---|---:|---:|---:|---:|
+| said the tools were missing | **0** | **0** | **0** | **0** |
+| asserted a made-up value | 0 | 4 | 14 | 1 |
+| asserted the file or repo does not exist | 15 | 0 | 1 | 8 |
+| wrote out a tool call that never ran | 15 | 11 | 19 | **20** |
+
+Control with tools on: 4 of 4 correct for fable 5.1.
+
+Fable sits at one end of one axis and the other end of another. It writes a phantom tool call in every single reply, more often than any other model here. It almost never asserts a made up value, 1 of 20, which puts it next to opus rather than next to haiku. A model that will not name a wrong value still never says it could not get the right one.
+
+**2 defects in this harness were found by the v3 run and are fixed in `run.ts`.** The first is the overwrite described under Reproducing. The second was in the judge: the pattern `token is:?` could decline to consume the colon and then capture it as the asserted value, so a correct reply that put the token in a fenced block on the next line was scored as `invented` with the value `:`. The control caught it by dropping to 2 of 4. Before fixing it, the v1 data was checked for rows carrying such a value: there are none, so no published number moves.
 
 ## Scope
 
-Two models, two questions, 48 calls, one sitting. A comparison, not a benchmark. Tools were removed entirely, which is not the same thing as a tool that fails at runtime, though from the model's side both end the same way: the call it wanted to make did not happen. Rates from 20 calls per model are indicative rather than precise. The direction was stable across every cell.
+The v1 tables above: 2 models, two questions, 48 calls, one sitting. A comparison, not a benchmark. Tools were removed entirely, which is not the same thing as a tool that fails at runtime, though from the model's side both end the same way: the call it wanted to make did not happen. Rates from 20 calls per model are indicative rather than precise. The direction was stable across every cell.
 
 ## Related
 
