@@ -212,6 +212,10 @@ judged deterministically against it. The fabricated tool results, including
 an invented error and an invented system reminder, come from that setting.
 This is a field probe of a known phenomenon, not the discovery of it.
 
+**Edits made for publication (2026-10-22).** One fabricated `Write` call in
+`results-v2.json` and `transcript-v2.md` named a real local path; the user
+directory in it is written as `C:\Users\<user>`. No reply, label or count changed.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
